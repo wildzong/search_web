@@ -1,0 +1,15 @@
+<header class="header-6 header-opacity">
+    <div class="branding">
+        <clr-icon shape="happy-face" class="is-solid margin-auto"></clr-icon>
+    </div>
+    <div class="header-nav">
+        <a class="active nav-link nav-text" style="color: white;" [routerLink]="['/home']">Dashboard</a>
+        <a class="nav-link nav-text" style="color: white;">...</a>
+    </div>
+    <div class="header-actions" *ngIf="!sharedservice.isSignIn">
+        <div class="btn-group btn-primary btn-right">
+            <button class="btn btn-success-outline button-signup" style="color: white;" (click)="openSignUp()">注册</button>
+            <button class="btn btn-primary" style="color: white;" (click)="openSignIn()">登录</button>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,15 @@
+.page{
+    height: calc(100vh - 2.5rem);
+    width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background: '../../assets/longmao1.jpg';
+}
+
+.main-page{
+    position: absolute;
+    top: 2.5rem;
+    height: calc(100%-2.5rem);
+    width: 100%;
+}

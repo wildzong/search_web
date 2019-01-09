@@ -1,0 +1,26 @@
+<div class="row detail-panel">
+  <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" *ngFor="let object of data">
+    <div (mouseover)="displayDownload(object.id)" (mouseout)="hideDownload(object.id)">
+        <a href="{{object.url}}" class="div-download display-None" id="{{object.id}}" download>
+            <clr-icon shape="download" class="icon-download"></clr-icon>
+            <button class="btn btn-warning btn-download">Download</button>
+        </a>
+
+        <a class="card clickable">
+            <div class="card-img">
+                <img src="{{object.url}}" alt="..." />
+            </div>
+            <div class="card-block">
+                <p class="card-text">
+                    {{object.description}}
+                </p>
+            </div>
+
+            <clr-icon shape="heart" class="icon-heart"></clr-icon>
+        </a>
+    </div> 
+    
+  </div>
+  
+</div>
+

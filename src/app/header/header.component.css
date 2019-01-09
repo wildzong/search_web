@@ -1,0 +1,21 @@
+.btn-right{
+    margin: auto;
+    margin-right: 1rem;
+  }
+
+.margin-auto{
+    margin: auto;
+  }
+
+.header-opacity{
+  background-color: rgba(0,0,255,0);
+}
+
+.button-signup{
+  color: white;
+  border: 1px solid white;
+}
+
+.margin-top{
+  margin-top: 1rem;
+}

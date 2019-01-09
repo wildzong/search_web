@@ -1,0 +1,63 @@
+<div class="sign-main-page">
+  <div class="sign-panel">
+    <div class="chose-sign">
+      <div class="btn-group btn-link">
+        <button class="btn btn-fontsize btn-left" (click)="openSignIn()"
+            [ngClass]="{'sign-border-bottom': isSignIn}" >Sign In</button>
+        <div class="separate"></div>
+        <button class="btn btn-fontsize btn-right" (click)="openSignUp()"
+            [ngClass]="{'sign-border-bottom': isSignUp}" >Sign Up</button>
+      </div>
+    </div>
+
+    <div class="sign-detail">
+      <div id="SignIn" *ngIf="isSignIn">
+        <div class="btn-detail">
+          <div>
+            <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
+               shape="user" class="is-solid"></clr-icon>
+            <input class="input-detail" style="border-bottom: none;" placeholder="email here" name="email"/>
+          </div>
+          
+          <div>
+            <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
+               shape="lock" class="is-solid"></clr-icon>
+            <input class="input-detail" style="width: 74%;" placeholder="password here" name="password" type="password"/>
+          </div>
+
+          <div class="confirmButton">
+            <button class="btn btn-primary btn-signin">Sign In</button>
+          </div>
+        </div>
+      </div>
+  
+      <div id="SignUp" *ngIf="isSignUp">
+        <div class="btn-detail">
+          <div>
+            <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
+               shape="user" class="is-solid"></clr-icon>
+            <input class="input-detail" style="border-bottom: none;" placeholder="email here" name="email" [(ngModel)]="userSignIn.email" />
+          </div>
+
+          <div>
+            <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
+               shape="lock" class="is-solid"></clr-icon>
+            <input class="input-detail" style="width: 74%;" placeholder="password here" type="password" name="password" [(ngModel)]="userSignIn.password" />
+          </div>
+
+          <div class="mail-input">
+            <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
+               shape="envelope" class="is-solid"></clr-icon>
+            <input class="input-detail input-email" placeholder="code from email" name="email"/>
+            <button class="btn btn-outline btn-send" id="sendEmail" *ngIf="!isSendEmail" (click)="SendEmail()">send</button>
+            <span class="badge badge-orange count-down" *ngIf="isSendEmail">{{ countDown }}</span>
+          </div>
+
+          <div class="confirmButton">
+            <button class="btn btn-primary btn-signup">Sign Up</button>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
