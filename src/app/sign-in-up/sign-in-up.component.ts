@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 
-import { UserSignUp } from '../variable';
+import { UserSignUp, SendEmail, UserLogIn } from '../variable';
 
 @Component({
   selector: 'app-sign-in-up',
@@ -16,6 +16,9 @@ export class SignInUpComponent implements OnInit {
   isSignIn = true;
   isSignUp = false;
 
+  // the words in the sign up button
+  SendEmailButton = 'Send';
+
   // countDown is used as a number to count down
   countDown: number;
 
@@ -26,9 +29,24 @@ export class SignInUpComponent implements OnInit {
 
   // the data structure of user
   userSignIn: UserSignUp = {
+    nickname: '',
     email: '',
-    password: ''
+    password: '',
+    mailcode: '',
   };
+
+  // the data structure of user when log in
+  userLogIn: UserLogIn = {
+    email: '',
+    password: '',
+  };
+
+  // is all the info for signing up prepared
+  isSignUpInfo = false;
+
+  // Reg for mail
+  reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$');
+  isMailRight = false;
 
   constructor(public activeRoute: ActivatedRoute, private http: Http) { }
 
@@ -39,6 +57,23 @@ export class SignInUpComponent implements OnInit {
 
     console.log(this.data.tostring);
 
+  }
+
+  ngAfterViewChecked(): void {
+    // Called after every check of the component's view. Applies to components only.
+    // Add 'implements AfterViewChecked' to the class.
+
+    if (this.isMailRight && this.userSignIn.mailcode !== ''
+          && this.userSignIn.nickname !== '' && this.userSignIn.password !== '') {
+            this.isSignUpInfo = true;
+          }
+  }
+
+  // check the mail
+  checkMail() {
+    if (this.reg.test(this.userSignIn.email)) {
+      this.isMailRight = true;
+    }
   }
 
   openSignIn() {
@@ -53,25 +88,50 @@ export class SignInUpComponent implements OnInit {
   }
 
   SendEmail() {
+
+    this.SendEmailButton = '60s';
+
     this.isSendEmail = true;
-    this.CountDown();
+    setTimeout(() => {
+      this.isSendEmail = false;
+      this.SendEmailButton = 'ReSend';
+    }, 5000);
 
     console.log(this.userSignIn);
-    const SignUp = new URLSearchParams();
-    SignUp.append('emial', this.userSignIn.email);
-    SignUp.append('password', this.userSignIn.password);
 
-    this.http.post('http://47.107.37.65/emailcode', SignUp)
+    const sendEmail: SendEmail = {
+      nickname: this.userSignIn.nickname,
+      email: this.userSignIn.email,
+    };
+
+    this.http.post('http://localhost:5000/emailcode', sendEmail)
       .map(res => res.json())
-      .subscribe(data => {
-        alert(JSON.stringify(data));
-      }, err => {
-        console.error('ERROR', err);
-      });
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err),
+        () => console.log('Send EmailCode Complete')
+      );
   }
 
-  CountDown() {
-    this.countDown = 120;
+  Register() {
+    console.log(this.userSignIn);
+    this.http.post('http://localhost:5000/register', this.userSignIn)
+      .map(res => res.json())
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err),
+        () => console.log('Register Complete')
+      );
+  }
+
+  LogIn() {
+    this.http.post('http://localhost:5000/login', this.userLogIn)
+      .map(res => res.json())
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err),
+        () => console.log('Log In Complete')
+      );
   }
 
 }

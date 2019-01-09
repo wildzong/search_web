@@ -6,7 +6,7 @@
 .sign-panel{
     background: white;
     width: 23rem;
-    height: 24.5rem;
+    height: 26rem;
     position: absolute;
     top: calc((100vh - 30rem) / 2);
     left: calc((100vw - 23rem) / 2);
@@ -88,7 +88,7 @@
 
 .mail-input{
     margin-top: 0.7rem;
-    margin-left: -0.2rem;
+    margin-left: 0.5rem;
 }
 
 .input-email{
@@ -96,6 +96,7 @@
 }
 
 .btn-send{
+    width: 4.5rem;
     margin-left: 1rem;
     font-size: 0.7rem;
 }

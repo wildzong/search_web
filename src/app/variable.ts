@@ -12,7 +12,24 @@ export class DetailOfPicture {
 
 export class UserSignUp {
     constructor(
+        public nickname: string,
+        public email: string,
+        public password: string,
+        public mailcode: string,
+    ) {}
+}
+
+export class SendEmail {
+    constructor(
+        public nickname: string,
+        public email: string,
+    ) {}
+}
+
+export class UserLogIn {
+    constructor(
         public email: string,
         public password: string,
     ) {}
 }
+
