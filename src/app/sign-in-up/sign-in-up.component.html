@@ -10,6 +10,7 @@
       </div>
     </div>
 
+
     <div class="sign-detail">
       <div id="SignIn" *ngIf="isSignIn">
         <div class="btn-detail">
@@ -26,10 +27,11 @@
           </div>
 
           <div class="confirmButton">
-            <button class="btn btn-primary btn-signin" (click)="LogIn()">Sign In</button>
+            <button class="btn btn-primary btn-signin" [disabled]="!isSignInInfo" (click)="LogIn()">Sign In</button>
           </div>
         </div>
       </div>
+
   
       <div id="SignUp" *ngIf="isSignUp">
         <div class="btn-detail">
@@ -43,7 +45,7 @@
             <clr-icon style="position: absolute;height: 2.7rem;width: 1.7rem;padding-left: 10px;"
                shape="user" class="is-solid"></clr-icon>
             <input class="input-detail" style="border-bottom: none;" placeholder="email here"
-                  (keyup)="checkMail()" name="email" [(ngModel)]="userSignIn.email" />
+                  name="email" [(ngModel)]="userSignIn.email" />
           </div>
 
           <div>

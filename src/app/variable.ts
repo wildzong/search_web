@@ -1,5 +1,6 @@
 export class SharedService {
     isSignIn = false;
+    isCookieEmpty = true;
 }
 
 export class DetailOfPicture {
@@ -33,3 +34,9 @@ export class UserLogIn {
     ) {}
 }
 
+export class SearchKey {
+    constructor(
+        public target_name: string,
+        public target_type: string,
+    ) {}
+}

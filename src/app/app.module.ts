@@ -12,6 +12,8 @@ import { AppRoutingModule } from './/app-routing.module';
 import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { SharedService } from './variable';
 
 import * as $ from 'jquery';
@@ -31,7 +33,8 @@ import * as $ from 'jquery';
     ClarityModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

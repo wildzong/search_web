@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 
-import { UserSignUp, SendEmail, UserLogIn } from '../variable';
+import { UserSignUp, SendEmail, UserLogIn, SharedService } from '../variable';
 
 @Component({
   selector: 'app-sign-in-up',
@@ -25,7 +25,7 @@ export class SignInUpComponent implements OnInit {
   // whether the email is send or not
   isSendEmail = false;
 
-  data: any;
+  address: any;
 
   // the data structure of user
   userSignIn: UserSignUp = {
@@ -48,14 +48,47 @@ export class SignInUpComponent implements OnInit {
   reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$');
   isMailRight = false;
 
-  constructor(public activeRoute: ActivatedRoute, private http: Http) { }
+  // the info for sign in
+  isSignInInfo = false;
+
+  constructor(
+    public activeRoute: ActivatedRoute,
+    private http: Http,
+    private router: Router,
+    private sharedservice: SharedService) { }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
-      this.data = params['address'];
+      this.address = params['address'];
     });
 
-    console.log(this.data.tostring);
+    // navigete to sign in or sign up page
+    if (this.address === 'signin') {
+      this.isSignIn = true;
+      this.isSignUp = false;
+    } else if (this.address === 'signup') {
+      this.isSignIn = false;
+      this.isSignUp = true;
+    }
+
+    // check the mail of sign in
+    if (this.reg.test(this.userSignIn.email)) {
+      this.isMailRight = true;
+    } else {
+      this.isMailRight = false;
+    }
+
+    // check the mail of sign up
+    if (this.reg.test(this.userLogIn.email) && this.userLogIn.password !== '') {
+      this.isSignInInfo = true;
+    } else {
+      this.isSignInInfo = false;
+    }
+
+    if (this.reg.test(this.userSignIn.email) && this.userSignIn.mailcode !== ''
+          && this.userSignIn.nickname !== '' && this.userSignIn.password !== '') {
+            this.isSignUpInfo = true;
+          }
 
   }
 
@@ -63,17 +96,24 @@ export class SignInUpComponent implements OnInit {
     // Called after every check of the component's view. Applies to components only.
     // Add 'implements AfterViewChecked' to the class.
 
-    if (this.isMailRight && this.userSignIn.mailcode !== ''
+    // check the mail of sign in
+    if (this.reg.test(this.userSignIn.email)) {
+      this.isMailRight = true;
+    } else {
+      this.isMailRight = false;
+    }
+
+    // check the mail of sign up
+    if (this.reg.test(this.userLogIn.email) && this.userLogIn.password !== '') {
+      this.isSignInInfo = true;
+    } else {
+      this.isSignInInfo = false;
+    }
+
+    if (this.reg.test(this.userSignIn.email) && this.userSignIn.mailcode !== ''
           && this.userSignIn.nickname !== '' && this.userSignIn.password !== '') {
             this.isSignUpInfo = true;
           }
-  }
-
-  // check the mail
-  checkMail() {
-    if (this.reg.test(this.userSignIn.email)) {
-      this.isMailRight = true;
-    }
   }
 
   openSignIn() {
@@ -128,10 +168,22 @@ export class SignInUpComponent implements OnInit {
     this.http.post('http://localhost:5000/login', this.userLogIn)
       .map(res => res.json())
       .subscribe(
-        data => console.log(data),
+        data => {
+          console.log(data);
+          if (data.re_code === '0') {
+            document.cookie = data.token;
+            this.router.navigate(['home']);
+            this.sharedservice.isCookieEmpty = false;
+            this.sharedservice.isSignIn = true;
+          }
+        },
         err => console.log(err),
         () => console.log('Log In Complete')
       );
+
+      if (document.cookie !== '') {
+        console.log(true);
+      }
   }
 
 }

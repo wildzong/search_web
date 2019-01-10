@@ -1,6 +1,6 @@
 <header class="header-6 header-opacity">
     <div class="branding">
-        <clr-icon shape="happy-face" class="is-solid margin-auto"></clr-icon>
+        <clr-icon shape="compass" class="is-solid margin-auto"></clr-icon>
     </div>
     <div class="header-nav">
         <a class="active nav-link nav-text" style="color: white;" [routerLink]="['/home']">Dashboard</a>
@@ -11,5 +11,23 @@
             <button class="btn btn-success-outline button-signup" style="color: white;" (click)="openSignUp()">注册</button>
             <button class="btn btn-primary" style="color: white;" (click)="openSignIn()">登录</button>
         </div>
+    </div>
+
+    <div class="header-actions" *ngIf="!sharedservice.isCookieEmpty">
+        <div class="dropdown bottom-right" id="user-info" (mouseover)="dropDown()" (mouseout)="closeDropDown()">
+            <button type="button" class="dropdown-toggle sign-icon">
+                <div>
+                    <clr-icon shape="happy-face" class="is-solid sign-in-face"></clr-icon>
+                </div>
+                <div>
+                    <clr-icon shape="caret down" id="caret-down"></clr-icon>
+                </div>
+            </button>
+            <div class="dropdown-menu" style="top: 95%;">
+                <button type="button" class="dropdown-item">Check Information</button>
+                <button type="button" class="dropdown-item">Change Password</button>
+            </div>
+        </div>
+
     </div>
 </header>

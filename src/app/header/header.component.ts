@@ -15,6 +15,13 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private sharedservice: SharedService) { }
 
   ngOnInit() {
+    if (document.cookie !== '') {
+      this.sharedservice.isCookieEmpty = false;
+      this.sharedservice.isSignIn = true;
+    } else {
+      this.sharedservice.isCookieEmpty = true;
+      this.sharedservice.isSignIn = false;
+    }
   }
 
   openSignIn() {
@@ -25,5 +32,13 @@ export class HeaderComponent implements OnInit {
   openSignUp() {
     this.router.navigate(['sign'], {queryParams: {'address': 'signup'}});
     this.sharedservice.isSignIn = true;
+  }
+
+  dropDown() {
+    document.getElementById('user-info').classList.add('open');
+  }
+
+  closeDropDown() {
+    document.getElementById('user-info').classList.remove('open');
   }
 }
